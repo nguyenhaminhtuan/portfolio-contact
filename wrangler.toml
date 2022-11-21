@@ -1,7 +1,3 @@
-name = "porfolio-contact"
+name = "portfolio-contact"
 main = "src/index.ts"
 compatibility_date = "2022-11-21"
-
-[vars]
-TELEGRAM_BOT_TOKEN = "[secret]"
-TELEGRAM_CHANNEL_ID = "[secret]"
