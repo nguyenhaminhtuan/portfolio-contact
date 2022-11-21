@@ -60,23 +60,24 @@ export default {
     if (request.method !== 'POST') {
       return new Response(null, {
         status: 405,
+        headers: corsHeaders,
       });
     }
 
     const url = new URL(request.url);
     if (url.pathname !== '/') {
-      return new Response(null, { status: 404 });
+      return new Response(null, { status: 404, headers: corsHeaders });
     }
 
     const contentType = request.headers.get('content-type') ?? '';
     if (!contentType.includes('application/json') && !request.body) {
-      return new Response(null, { status: 400 });
+      return new Response(null, { status: 400, headers: corsHeaders });
     }
 
     const body: RequestBody = await request.json();
     const validateResult = schema.safeParse(body);
     if (!validateResult.success) {
-      return new Response(null, { status: 400 });
+      return new Response(null, { status: 400, headers: corsHeaders });
     }
 
     const { from, subject, message } = validateResult.data;
@@ -94,9 +95,9 @@ export default {
     const resData: { ok: boolean; result: any } = await res.json();
 
     if (!resData || !resData.ok) {
-      return new Response(null, { status: 500 });
+      return new Response(null, { status: 500, headers: corsHeaders });
     }
 
-    return new Response(null, { status: 200 });
+    return new Response(null, { status: 200, headers: corsHeaders });
   },
 };
